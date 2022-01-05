@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.vlingo.xoom</groupId>
+    <artifactId>xoom-cloud-platform</artifactId>
+    <version>0.1.3-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>xoom-cloud-aws-demo</artifactId>
+  <name>xoom-cloud-aws-demo</name>
+  <description>Showcase of xoom-cloud AWS Marketplace product</description>
+
+  <properties>
+    <exec.mainClass>io.vlingo.xoom.examples.pingpong.App</exec.mainClass>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.vlingo.xoom</groupId>
+      <artifactId>xoom-lattice</artifactId>
+      <version>1.9.1-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vlingo.xoom</groupId>
+      <artifactId>xoom-turbo</artifactId>
+      <version>1.9.1-SNAPSHOT</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>${exec.mainClass}</mainClass>
+              <classpathPrefix>dependency-jars/</classpathPrefix>
+              <useUniqueVersions>false</useUniqueVersions>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>
+                ${project.build.directory}/dependency-jars/
+              </outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
