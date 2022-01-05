@@ -10,6 +10,7 @@
     <logger name="reactor" level="error"/>
     <logger name="io.vlingo.xoom.wire" level="error"/>
     <logger name="io.vlingo.xoom.lattice.grid" level="info"/>
+    <logger name="io.vlingo.xoom" level="debug"/>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
