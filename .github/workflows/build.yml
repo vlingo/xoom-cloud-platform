@@ -27,7 +27,7 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
       - name: docker-push-to-ecr
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: public.ecr.aws/g9b2w1m3
           ECR_REPOSITORY: xoom-cloud-demo
           IMAGE_TAG: ${{ env.XC_VER }}
         run: |
