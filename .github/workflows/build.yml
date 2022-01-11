@@ -14,22 +14,17 @@ jobs:
         run: echo "XC_VER=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
       - name: print-app-version
         run: echo "Detected application version:" ${{ env.XC_VER }}
-      - name: aws-config-credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: aws-ecr-login
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
       - name: maven-build
         run: mvn --batch-mode --update-snapshots package
-      - name: docker-push-to-ecr
+      - name: login-to-public-ecr
+        uses: docker/login-action@v1
+        with:
+          registry: public.ecr.aws
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
-          ECR_REGISTRY: public.ecr.aws/g9b2w1m3
-          ECR_REPOSITORY: xoom-cloud-demo
-          IMAGE_TAG: ${{ env.XC_VER }}
+          AWS_REGION: us-east-1
+      - name: docker-push-to-ecr
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f aws-demo/Dockerfile aws-demo
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t public.ecr.aws/g9b2w1m3/xoom-cloud-demo:$XC_VER -f aws-demo/Dockerfile aws-demo
+          docker push public.ecr.aws/g9b2w1m3/xoom-cloud-demo:$XC_VER
