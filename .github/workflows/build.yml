@@ -1,7 +1,7 @@
 on: [push, pull_request]
 
 jobs:
-  cloud-maven-build:
+  xoom-cloud-demo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
