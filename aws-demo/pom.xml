@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.vlingo.xoom</groupId>
     <artifactId>xoom-cloud-platform</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6-SNAPSHOT</version>
   </parent>
 
   <artifactId>xoom-cloud-aws-demo</artifactId>
