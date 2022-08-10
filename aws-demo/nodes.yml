@@ -1,43 +1,43 @@
-# Service for node3
+# Service for node1
 apiVersion: v1
 kind: Service
 metadata:
-  name: app3host # acts as DNS!
+  name: app1host # acts as DNS!
   namespace: xoom
 spec:
-  type: NodePort
+  type: NodePort # switch to ClusterIP afterwards
   selector:
     tier: application
-    appName: xoom-cloud-demo-node3-pod
+    appName: xoom-cloud-demo-node1-pod
   ports:
     - name: operational
       protocol: TCP
-      port: 17375
-      targetPort: 17375
+      port: 17371
+      targetPort: 17371
     - name: application
       protocol: TCP
-      port: 17376
-      targetPort: 17376
+      port: 17372
+      targetPort: 17372
 ---
-# Deployment for node3
+# Deployment for node1
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xoom-cloud-demo-node3-depolyment
+  name: xoom-cloud-demo-node1-depolyment
   namespace: xoom
   labels:
-    appName: xoom-cloud-demo-node3-depolyment
+    appName: xoom-cloud-demo-node1-depolyment
 spec:
   selector:
     matchLabels:
       tier: application
-      appName: xoom-cloud-demo-node3-pod
+      appName: xoom-cloud-demo-node1-pod
   template:
     metadata:
       labels:
         system: xoom-cloud-demo
         tier: application
-        appName: xoom-cloud-demo-node3-pod
+        appName: xoom-cloud-demo-node1-pod
     spec:
       serviceAccountName: xoom-cloud-service-account
       containers:
@@ -46,12 +46,12 @@ spec:
           image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2-SNAPSHOT
           ports:
             - name: operational
-              containerPort: 17375
+              containerPort: 17371
             - name: application
-              containerPort: 17376
+              containerPort: 17372
           env:
             - name: APP_ARGS
-              value: node3
+              value: '1:node1:true:app1host:17371:17372'
 ---
 # Service for node2
 apiVersion: v1
@@ -106,48 +106,48 @@ spec:
               containerPort: 17374
           env:
             - name: APP_ARGS
-              value: node2
+              value: '2:node2:false:app2host:17373:17374'
 ---
-# Service for node1
+# Service for node3
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1host # acts as DNS!
+  name: app3host # acts as DNS!
   namespace: xoom
 spec:
-  type: NodePort # switch to ClusterIP afterwards
+  type: NodePort
   selector:
     tier: application
-    appName: xoom-cloud-demo-node1-pod
+    appName: xoom-cloud-demo-node3-pod
   ports:
     - name: operational
       protocol: TCP
-      port: 17371
-      targetPort: 17371
+      port: 17375
+      targetPort: 17375
     - name: application
       protocol: TCP
-      port: 17372
-      targetPort: 17372
+      port: 17376
+      targetPort: 17376
 ---
-# Deployment for node1
+# Deployment for node3
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xoom-cloud-demo-node1-depolyment
+  name: xoom-cloud-demo-node3-depolyment
   namespace: xoom
   labels:
-    appName: xoom-cloud-demo-node1-depolyment
+    appName: xoom-cloud-demo-node3-depolyment
 spec:
   selector:
     matchLabels:
       tier: application
-      appName: xoom-cloud-demo-node1-pod
+      appName: xoom-cloud-demo-node3-pod
   template:
     metadata:
       labels:
         system: xoom-cloud-demo
         tier: application
-        appName: xoom-cloud-demo-node1-pod
+        appName: xoom-cloud-demo-node3-pod
     spec:
       serviceAccountName: xoom-cloud-service-account
       containers:
@@ -156,9 +156,9 @@ spec:
           image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2-SNAPSHOT
           ports:
             - name: operational
-              containerPort: 17371
+              containerPort: 17375
             - name: application
-              containerPort: 17372
+              containerPort: 17376
           env:
             - name: APP_ARGS
-              value: node1
+              value: '3:node3:false:app3host:17375:17376'
