@@ -42,8 +42,8 @@ spec:
       serviceAccountName: xoom-cloud-service-account
       containers:
         - name: xoom-cloud-demo-container
-          # image: vlingo/xoom-cloud-demo:1.0.2-SNAPSHOT
-          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2-SNAPSHOT
+          # image: vlingo/xoom-cloud-demo:1.0.2
+          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2
           ports:
             - name: operational
               containerPort: 17371
@@ -97,8 +97,8 @@ spec:
       serviceAccountName: xoom-cloud-service-account
       containers:
         - name: xoom-cloud-demo-container
-          # image: vlingo/xoom-cloud-demo:1.0.2-SNAPSHOT
-          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2-SNAPSHOT
+          # image: vlingo/xoom-cloud-demo:1.0.2
+          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2
           ports:
             - name: operational
               containerPort: 17373
@@ -152,8 +152,8 @@ spec:
       serviceAccountName: xoom-cloud-service-account
       containers:
         - name: xoom-cloud-demo-container
-          # image: vlingo/xoom-cloud-demo:1.0.2-SNAPSHOT
-          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2-SNAPSHOT
+          # image: vlingo/xoom-cloud-demo:1.0.2
+          image: public.ecr.aws/g9b2w1m3/xoom-cloud-demo:1.0.2
           ports:
             - name: operational
               containerPort: 17375
