@@ -1,7 +1,6 @@
 package io.vlingo.xoom.examples.pingpong;
 
-import io.vlingo.xoom.actors.Configuration;
-import io.vlingo.xoom.actors.Properties;
+import io.vlingo.xoom.cluster.model.NodeProperties;
 import io.vlingo.xoom.lattice.grid.Grid;
 import io.vlingo.xoom.examples.pingpong.domain.Config;
 import io.vlingo.xoom.examples.pingpong.domain.Mailer;
@@ -15,7 +14,7 @@ public class App {
 
   public static void main(final String[] args) throws Exception {
     Config.nodeName = parseNameFromArguments(args);
-    final Grid grid = Grid.start("world-of-ping-pong", Config.nodeName);
+    final Grid grid = Grid.start("world-of-ping-pong", args[0]);
 
     if ("node1".equals(Config.nodeName)) {
       spinUpActors(grid);
@@ -26,12 +25,13 @@ public class App {
     if (args.length == 0) {
       System.err.println("The node must be named with a command-line argument.");
       System.exit(1);
-    }
-    else if (args.length > 1) {
+    } else if (args.length > 1) {
       System.err.println("Too many arguments; provide node name only.");
       System.exit(1);
     }
-    return args[0];
+
+    return NodeProperties.from(args[0])
+            .getName();
   }
 
   private static void spinUpActors(Grid grid) {
